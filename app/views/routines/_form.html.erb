@@ -1,0 +1,27 @@
+<%= form_with(model: routine, class: "contents") do |form| %>
+  <% if routine.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(routine.errors.count, "error") %> prohibited this routine from being saved:</h2>
+
+      <ul>
+        <% routine.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= form.label :date, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.date_field :date, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50", value: routine.date || Date.today %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :notes, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_area :notes, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit "Create Routine", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>
