@@ -1,7 +1,10 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: "Uphill Walk"
 
 two:
-  name: MyString
+  name: "Barbell Curl"
+
+three:
+  name: "Push-up"

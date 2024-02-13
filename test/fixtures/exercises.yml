@@ -3,7 +3,7 @@
 one:
   name: MyString
   weight: 1
-  routine: one
+  routine: two
   exercise_type: one
 
 two:

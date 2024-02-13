@@ -9,13 +9,15 @@ class RoutinesController < ApplicationController
 
   # GET /routines/1 or /routines/1.json
   def show
+    # ---- this is all handled by date_lookup now
     # Assuming you're passing the date as a query parameter or part of the path
     # For example, /routines/2023-01-01 or /routines?date=2023-01-01
-    date = params[:date] ? Date.parse(params[:date]) : Date.today
-    @routine = current_user.routines.find_by(date: date)
-
+    #date = params[:date] ? Date.parse(params[:date]) : Date.today
+    #@routine = current_user.routines.find_by(date: date)
+    # ----- current code
+    @routine = current_user.routines.find(params[:id])
     if @routine
-      @exercises = @routine.exercises
+      @exercises = @routine.exercises 
     else
       # Handle the case where no routine is found for the given date
       # You might want to redirect to another page or show a flash message
@@ -92,6 +94,19 @@ class RoutinesController < ApplicationController
       # If no routine is found, you can redirect or handle as needed
       redirect_to(routines_path, notice: 'No routine found for the selected date.')
     end
+  end
+
+  # GET /routines/month_lookup/2024-02-11
+  def month_lookup
+    # Get the first day of the month
+    date = Date.parse(params[:date]).beginning_of_month
+
+    # Get the last day of the month
+    end_date = date.end_of_month
+
+    # Fetch all routines within this date range
+    @routines = current_user.routines.where(date: date..end_date)
+
   end
 
   private

@@ -2,6 +2,8 @@ require "test_helper"
 
 class RoutinesControllerTest < ActionDispatch::IntegrationTest
   setup do
+    @user = users(:one)
+    sign_in @user
     @routine = routines(:one)
   end
 
@@ -17,7 +19,7 @@ class RoutinesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create routine" do
     assert_difference("Routine.count") do
-      post routines_url, params: { routine: {  } }
+      post routines_url, params: { routine: {  date: Date.today, notes: "New test routine"  } }
     end
 
     assert_redirected_to routine_url(Routine.last)

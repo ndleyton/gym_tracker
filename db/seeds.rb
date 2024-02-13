@@ -8,3 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+["Bench Press", "DB Alternate Hammer Curls", "Barbell Squat", "Deadlift", "DB Incline Bench Press"].each do |exercise_type|
+    ExerciseType.find_or_create_by!(name: exercise_type)
+end
+
