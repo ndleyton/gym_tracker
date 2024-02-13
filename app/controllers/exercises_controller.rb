@@ -22,7 +22,7 @@ class ExercisesController < ApplicationController
   # POST /exercises or /exercises.json
   def create
     @routine = Routine.find(params[:routine_id])
-    exercise_params = params.require(:exercise).permit(:name, :weight, :sets, :repetitions, :intensity, :notes, :exercise_type_id, :new_exercise_type_name)
+    exercise_params = params.require(:exercise).permit(:name, :weight, :sets, :repetitions, :intensity, :notes, :exercise_type_id, :new_exercise_type_name, :intensity_measurement)
     if exercise_params[:new_exercise_type_name].present?
       exercise_type = ExerciseType.find_or_create_by(name: exercise_params[:new_exercise_type_name])
       exercise_params[:exercise_type_id] = exercise_type.id

@@ -16,7 +16,9 @@
           <th>Sets</th>
           <th>Repetitions</th>
           <th>Intensity</th>
+          <th>Intensity Measurement</th>
           <th>Notes</th>
+          <th>Exercise Name</th>
         </tr>
       </thead>
       <tbody>
@@ -27,7 +29,9 @@
             <td><%= exercise.sets %></td>
             <td><%= exercise.repetitions %></td>
             <td><%= exercise.intensity %></td>
+            <td><%= exercise.intensity_measurement %></td>
             <td><%= exercise.notes %></td>
+            <td><%= exercise.exercise_type&.name %></td>
           </tr>
         <% end %>
       </tbody>
@@ -39,7 +43,13 @@
         <td><%= form.number_field :sets %></td>
         <td><%= form.number_field :repetitions %></td>
         <td><%= form.number_field :intensity %></td>
+        <%= form.select :intensity_measurement, Exercise::INTENSITY_MEASUREMENTS.map { |m| [m, m] }, { include_blank: true } %>
         <td><%= form.text_field :notes %></td>
+        <td>
+          <turbo-frame id="exercise-type-frame">
+            <%= render 'exercise_types/typeahead', f: form %>
+          </turbo-frame>
+        </td>
         <td><%= form.submit "Add Exercise" %></td>
       </tr>
     <% end %>
