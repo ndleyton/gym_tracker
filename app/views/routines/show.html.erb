@@ -8,7 +8,7 @@
 
     <h2>Exercises</h2>
 
-    <table>
+    <table class="table-fixed w-full">
       <thead>
         <tr>
           <th>Name</th>
@@ -19,6 +19,7 @@
           <th>Intensity Measurement</th>
           <th>Notes</th>
           <th>Exercise Name</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -32,32 +33,36 @@
             <td><%= exercise.intensity_measurement %></td>
             <td><%= exercise.notes %></td>
             <td><%= exercise.exercise_type&.name %></td>
+            <td></td>
+          </tr>
+        <% end %>
+        <%= form_with(model: [ @routine, @routine.exercises.build ], local: true) do |form| %>
+          <tr>
+            <td><%= form.text_field :name, class: 'input' %></td>
+            <td><%= form.number_field :weight, class: 'input' %></td>
+            <td><%= form.number_field :sets, class: 'input' %></td>
+            <td><%= form.number_field :repetitions, class: 'input' %></td>
+            <td><%= form.number_field :intensity, class: 'input' %></td>
+            <td>
+              <%= form.select :intensity_measurement, options_for_select(Exercise::INTENSITY_MEASUREMENTS.map { |m| [m, m] }, { include_blank: true }), {}, {class: 'input'} %>
+            </td>
+            <td><%= form.text_field :notes, class: 'input' %></td>
+            <td>
+              <turbo-frame id="exercise-type-frame">
+                <%= render 'exercise_types/typeahead', f: form %>
+              </turbo-frame>
+            </td>
+            <td>
+              <%= form.submit "Add Exercise", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+            </td>
           </tr>
         <% end %>
       </tbody>
     </table>
-    <%= form_with(model: [ @routine, @routine.exercises.build ], local: true) do |form| %>
-      <tr>
-        <td><%= form.text_field :name %></td>
-        <td><%= form.number_field :weight %></td>
-        <td><%= form.number_field :sets %></td>
-        <td><%= form.number_field :repetitions %></td>
-        <td><%= form.number_field :intensity %></td>
-        <%= form.select :intensity_measurement, Exercise::INTENSITY_MEASUREMENTS.map { |m| [m, m] }, { include_blank: true } %>
-        <td><%= form.text_field :notes %></td>
-        <td>
-          <turbo-frame id="exercise-type-frame">
-            <%= render 'exercise_types/typeahead', f: form %>
-          </turbo-frame>
-        </td>
-        <td><%= form.submit "Add Exercise" %></td>
-      </tr>
-    <% end %>
-
 
     <%= link_to "Edit this routine", edit_routine_path(@routine), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <div class="inline-block ml-2">
-      <%= button_to "Destroy this routine", routine_path(@routine), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+      <%= button_to "Destroy this routine", routine_path(@routine), method: :delete, data: { confirm: 'Are you sure?' }, class: "mt-2 rounded-lg py-3 px-5 bg-red-500 text-white font-medium" %>
     </div>
     <%= link_to "Back to routines", routines_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   </div>
