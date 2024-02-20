@@ -2,8 +2,7 @@
 <%= f.label :exercise_type_id %>
 <%= f.collection_select :exercise_type_id, ExerciseType.order(:name), :id, :name, include_blank: true, data: { controller: "typeahead", typeahead_target: "input" } %>
 
-<!-- Optional: Add field to create new ExerciseType -->
 <div data-typeahead-target="newTypeForm">
   <%= label_tag :new_exercise_type_name, "Or create new type:" %>
-  <%= text_field_tag :new_exercise_type_name, nil, data: { action: "typeahead#createType" } %>
+  <%= text_field_tag :new_exercise_type_name, nil, data: { action: "blur->typeahead#createType" } %>
 </div>

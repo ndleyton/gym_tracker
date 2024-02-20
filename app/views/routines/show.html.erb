@@ -15,7 +15,7 @@
           <th>Weight</th>
           <th class="w-12">Sets</th>
           <th class="w-12">Rep</th>
-          <th>Intens.</th>
+          <th class="w-24">Intens.</th>
           <th class="w-12">Meas.</th>
           <th>Notes</th>
           <th>Exercise Name</th>
@@ -42,7 +42,7 @@
             <td><%= form.number_field :weight, class: 'input' %></td>
             <td><%= form.number_field :sets, class: 'input w-12'  %></td>
             <td><%= form.number_field :repetitions, class: 'input w-12' %></td>
-            <td><%= form.number_field :intensity, class: 'input' %></td>
+            <td><%= form.number_field :intensity, class: 'input w-24' %></td>
             <td>
               <%= form.select :intensity_measurement, options_for_select(Exercise::INTENSITY_MEASUREMENTS.map { |m| [m, m] }, { include_blank: true }), {}, {class: 'input'} %>
             </td>

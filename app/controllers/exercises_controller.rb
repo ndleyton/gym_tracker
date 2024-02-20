@@ -24,7 +24,7 @@ class ExercisesController < ApplicationController
     @routine = Routine.find(params[:routine_id])
     exercise_params = params.require(:exercise).permit(:name, :weight, :sets, :repetitions, :intensity, :notes, :exercise_type_id, :new_exercise_type_name, :intensity_measurement)
     if exercise_params[:new_exercise_type_name].present?
-      exercise_type = ExerciseType.find_or_create_by(name: exercise_params[:new_exercise_type_name])
+      exercise_type = ExerciseType.find_or_create_by!(name: exercise_params[:new_exercise_type_name])
       exercise_params[:exercise_type_id] = exercise_type.id
     end
     @exercise = @routine.exercises.build(exercise_params.except(:new_exercise_type_name))
@@ -32,25 +32,9 @@ class ExercisesController < ApplicationController
     if @exercise.save
       redirect_to @routine, notice: 'Exercise was successfully added.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
-  
-
-  # 
-  # def create
-  #   @exercise = Exercise.new(exercise_params)
-
-  #   respond_to do |format|
-  #     if @exercise.save
-  #       format.html { redirect_to exercise_url(@exercise), notice: "Exercise was successfully created." }
-  #       format.json { render :show, status: :created, location: @exercise }
-  #     else
-  #       format.html { render :new, status: :unprocessable_entity }
-  #       format.json { render json: @exercise.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
 
   # PATCH/PUT /exercises/1 or /exercises/1.json
   def update
@@ -84,6 +68,6 @@ class ExercisesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def exercise_params
       #params.fetch(:exercise, {})
-      params.require(:exercise).permit(:name, :weight, :sets, :repetitions, :intensity, :notes)
+      params.require(:exercise).permit(:name, :weight, :sets, :repetitions, :intensity, :intensity_measurement, :notes, :exercise_type_id)
     end
 end
