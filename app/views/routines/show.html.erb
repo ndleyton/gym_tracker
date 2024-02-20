@@ -24,24 +24,24 @@
       </thead>
       <tbody>
         <% @exercises&.each do |exercise| %>
-          <tr class="hover:bg-gray-50">
-            <td><%= exercise.name %></td>
-            <td class="text-end"><%= exercise.weight %></td>
-            <td class="text-end"><%= exercise.sets %></td>
-            <td class="text-end"><%= exercise.repetitions %></td>
-            <td class="text-end"><%= exercise.intensity %></td>
-            <td><%= exercise.intensity_measurement %></td>
-            <td><%= exercise.notes %></td>
-            <td><%= exercise.exercise_type&.name %></td>
-            <td></td>
+          <tr class="hover:bg-gray-50 border-b border-blue-gray-200">
+            <td class="px-3 py-3"><%= exercise.name %></td>
+            <td class="text-end px-2 py-3"><%= exercise.weight %></td>
+            <td class="text-end px-3 py-3"><%= exercise.sets %></td>
+            <td class="text-end px-3 py-3"><%= exercise.repetitions %></td>
+            <td class="text-end px-3 py-3"><%= exercise.intensity %></td>
+            <td class="px-3 py-3"><%= exercise.intensity_measurement %></td>
+            <td class="px-3 py-3"><%= exercise.notes %></td>
+            <td class="px-3 py-3"><%= exercise.exercise_type&.name %></td>
+            <td class="px-3 py-3"></td>
           </tr>
         <% end %>
         <%= form_with(model: [ @routine, @routine.exercises.build ], local: true) do |form| %>
-          <tr>
+          <tr class="border-b border-blue-gray-200">
             <td><%= form.text_field :name, class: 'input' %></td>
             <td><%= form.number_field :weight, class: 'input' %></td>
-            <td><%= form.number_field :sets, class: 'input'  %></td>
-            <td><%= form.number_field :repetitions, class: 'input' %></td>
+            <td><%= form.number_field :sets, class: 'input w-12'  %></td>
+            <td><%= form.number_field :repetitions, class: 'input w-12' %></td>
             <td><%= form.number_field :intensity, class: 'input' %></td>
             <td>
               <%= form.select :intensity_measurement, options_for_select(Exercise::INTENSITY_MEASUREMENTS.map { |m| [m, m] }, { include_blank: true }), {}, {class: 'input'} %>
