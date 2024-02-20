@@ -1,65 +1,59 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+<div class="mx-auto md:w-2/3 w-full flex flex-col">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg" id="notice"><%= notice %></p>
+  <% end %>
+
+  <%= render @routine %>
+
+  <h2>Exercises</h2>
+
+  <div class="shadow-lg bg-white">
+    <div class="flex bg-blue-100 border-b">
+      <div>Name</div>
+      <div>Weight</div>
+      <div>Sets</div>
+      <div>Rep</div>
+      <div>Intens.</div>
+      <div>Meas.</div>
+      <div>Notes</div>
+      <div>Exercise Name</div>
+      <div></div> <!-- Placeholder for alignment -->
+    </div>
+
+    <% @exercises&.each do |exercise| %>
+      <div class="flex border-b border-blue-gray-200 hover:bg-gray-50">
+        <div class="px-3 py-3 flex-grow"><%= exercise.name %></div>
+        <div class="text-end px-2 py-3 flex-grow"><%= exercise.weight %></div>
+        <div class="text-end px-3 py-3"><%= exercise.sets %></div>
+        <div class="text-end px-3 py-3"><%= exercise.repetitions %></div>
+        <div class="text-end px-3 py-3 flex-grow"><%= exercise.intensity %></div>
+        <div class="px-3 py-3 flex-grow"><%= exercise.intensity_measurement %></div>
+        <div class="px-3 py-3 flex-grow"><%= exercise.notes %></div>
+        <div class="px-3 py-3 flex-grow"><%= exercise.exercise_type&.name %></div>
+        <div class="px-3 py-3"> <!-- Placeholder for buttons or actions --> </div>
+      </div>
     <% end %>
 
-    <%= render @routine %>
-
-    <h2>Exercises</h2>
-
-    <table class="table-fixed w-full shadow-lg bg-white border-collapse">
-      <thead>
-        <tr class="bg-blue-100 border">
-          <th>Name</th>
-          <th>Weight</th>
-          <th class="w-12">Sets</th>
-          <th class="w-12">Rep</th>
-          <th>Intens.</th>
-          <th class="w-12">Meas.</th>
-          <th>Notes</th>
-          <th>Exercise Name</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @exercises&.each do |exercise| %>
-          <tr class="hover:bg-gray-50 border-b border-blue-gray-200">
-            <td class="px-3 py-3"><%= exercise.name %></td>
-            <td class="text-end px-2 py-3"><%= exercise.weight %></td>
-            <td class="text-end px-3 py-3"><%= exercise.sets %></td>
-            <td class="text-end px-3 py-3"><%= exercise.repetitions %></td>
-            <td class="text-end px-3 py-3"><%= exercise.intensity %></td>
-            <td class="px-3 py-3"><%= exercise.intensity_measurement %></td>
-            <td class="px-3 py-3"><%= exercise.notes %></td>
-            <td class="px-3 py-3"><%= exercise.exercise_type&.name %></td>
-            <td class="px-3 py-3"></td>
-          </tr>
-        <% end %>
-        <%= form_with(model: [ @routine, @routine.exercises.build ], local: true) do |form| %>
-          <tr class="border-b border-blue-gray-200">
-            <td><%= form.text_field :name, class: 'input' %></td>
-            <td><%= form.number_field :weight, class: 'input' %></td>
-            <td><%= form.number_field :sets, class: 'input w-12'  %></td>
-            <td><%= form.number_field :repetitions, class: 'input w-12' %></td>
-            <td><%= form.number_field :intensity, class: 'input' %></td>
-            <td>
-              <%= form.select :intensity_measurement, options_for_select(Exercise::INTENSITY_MEASUREMENTS.map { |m| [m, m] }, { include_blank: true }), {}, {class: 'input'} %>
-            </td>
-            <td><%= form.text_field :notes, class: 'input' %></td>
-            <td>
-              <turbo-frame id="exercise-type-frame">
-                <%= render 'exercise_types/typeahead', f: form %>
-              </turbo-frame>
-            </td>
-            <td>
-              <%= form.submit "Add Exercise", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-
+    <%= form_with(model: [ @routine, @routine.exercises.build ], local: true, class: "flex border-b border-blue-gray-200") do |form| %>
+      <div class="flex-grow"><%= form.text_field :name, class: 'input' %></div>
+      <div class="flex-grow"><%= form.number_field :weight, class: 'input' %></div>
+      <div><%= form.number_field :sets, class: 'input w-12'  %></div>
+      <div><%= form.number_field :repetitions, class: 'input w-12' %></div>
+      <div class="flex-grow"><%= form.number_field :intensity, class: 'input' %></div>
+      <div class="flex-grow">
+        <%= form.select :intensity_measurement, options_for_select(Exercise::INTENSITY_MEASUREMENTS.map { |m| [m, m] }, { include_blank: true }), {}, {class: 'input'} %>
+      </div>
+      <div class="flex-grow"><%= form.text_field :notes, class: 'input' %></div>
+      <div class="flex-grow">
+        <turbo-frame id="exercise-type-frame">
+          <%= render 'exercise_types/typeahead', f: form %>
+        </turbo-frame>
+      </div>
+      <div>
+        <%= form.submit "Add Exercise", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+      </div>
+    <% end %>
+  </div>
     <%= link_to "Edit this routine", edit_routine_path(@routine), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <div class="inline-block ml-2">
       <%= button_to "Destroy this routine", routine_path(@routine), method: :delete, data: { confirm: 'Are you sure?' }, class: "mt-2 rounded-lg py-3 px-5 bg-red-500 text-white font-medium" %>
