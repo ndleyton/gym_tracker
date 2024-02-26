@@ -47,11 +47,10 @@
             <td>
               <%= form.select :intensity_measurement, options_for_select(Exercise::INTENSITY_MEASUREMENTS.map { |m| [m, m] }), {}, {class: 'input'} %>
             </td>
-            <td><%= form.text_field :notes, class: 'input' %></td>
+            <td><%= form.text_field :notes, class: 'input',  placeholder:"e.g. Failure" %></td>
             <td>
               <div>
                 <%= form.collection_select :exercise_type_id, ExerciseType.order(:name), :id, :name, include_blank: true %>
-                <%= form.label :new_exercise_type_name, "Or create new type:" %>
                 <%= form.text_field :new_exercise_type_name, class: 'input', placeholder:"Or create new type:" %>
               </div>
             </td>
