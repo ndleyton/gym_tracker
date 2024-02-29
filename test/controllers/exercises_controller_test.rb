@@ -1,8 +1,13 @@
 require "test_helper"
 
 class ExercisesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers # If using Devise
+
   setup do
     @exercise = exercises(:one)
+    @user = users(:one) # Assuming you have a users fixture
+    sign_in @user # If the controller requires authentication
+    @exercise_type = exercise_types(:one) # Assuming you have an ExerciseType fixture
   end
 
   test "should get index" do
@@ -17,7 +22,7 @@ class ExercisesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create exercise" do
     assert_difference("Exercise.count") do
-      post exercises_url, params: { exercise: {  } }
+      post exercises_url, params: { exercise: { name: "New Exercise", intensity: 5, sets: 3, repetitions: 12, intensity_measurement: "lbs", exercise_type_id: @exercise_type.id, notes: "Test notes" } }
     end
 
     assert_redirected_to exercise_url(Exercise.last)
@@ -34,8 +39,11 @@ class ExercisesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update exercise" do
-    patch exercise_url(@exercise), params: { exercise: {  } }
+    patch exercise_url(@exercise), params: { exercise: { intensity: 75, intensity_measurement: 'Kgs', sets: 3, repetitions: 12, exercise_type_id: @exercise_type.id, notes:"updated notes"} }
     assert_redirected_to exercise_url(@exercise)
+    @exercise.reload
+    assert_equal 75, @exercise.intensity
+    assert_equal 'updated notes', @exercise.notes
   end
 
   test "should destroy exercise" do

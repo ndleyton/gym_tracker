@@ -5,7 +5,7 @@ class RoutineTest < ActiveSupport::TestCase
   test "associated exercises should be destroyed" do
     exercise_type = ExerciseType.create!(name: "Push-up")
     routine = routines(:one) # This uses fixtures; replace with your setup if needed
-    routine.exercises.create!(name: "Push-up", sets: 3, repetitions: 12, exercise_type: exercise_type) # Customize as needed
+    routine.exercises.create!(intensity: 75, intensity_measurement: 'Kgs', sets: 3, repetitions: 12, exercise_type: exercise_type) # Customize as needed
 
     assert_difference 'Exercise.count', -1 do
       routine.destroy
