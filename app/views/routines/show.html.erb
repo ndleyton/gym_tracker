@@ -8,7 +8,7 @@
 
     <h2>Exercises</h2>
 
-    <table class="table-fixed w-full shadow-lg bg-white border-collapse">
+    <table class="table-fixed w-full shadow-lg bg-white border-collapse rounded-lg">
       <thead>
         <tr class="bg-blue-100 border">
           <th>Name</th>
@@ -39,19 +39,19 @@
         <% end %>
         <%= form_with(model: [ @routine, @routine.exercises.build ], local: true) do |form| %>
           <tr class="border-b border-blue-gray-200">
-            <td><%= form.text_field :name, class: 'input w-full' %></td>
-            <td><%= form.number_field :weight, class: 'input w-full' %></td>
-            <td><%= form.number_field :sets, class: 'input w-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'  %></td>
-            <td><%= form.number_field :repetitions, class: 'input w-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %></td>
-            <td><%= form.number_field :intensity, class: 'input w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' %></td>
+            <td><%= form.text_field :name, class: 'input w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5' %></td>
+            <td><%= form.number_field :weight, class: 'input w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5' %></td>
+            <td><%= form.number_field :sets, class: 'input w-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5'  %></td>
+            <td><%= form.number_field :repetitions, class: 'input w-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5' %></td>
+            <td><%= form.number_field :intensity, class: 'input w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5' %></td>
             <td>
-              <%= form.select :intensity_measurement, options_for_select(Exercise::INTENSITY_MEASUREMENTS.map { |m| [m, m] }), {}, {class: 'input'} %>
+              <%= form.select :intensity_measurement, options_for_select(Exercise::INTENSITY_MEASUREMENTS.map { |m| [m, m] }), {}, {class: 'input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'} %>
             </td>
-            <td><%= form.text_field :notes, class: 'input',  placeholder:"e.g. Failure" %></td>
+            <td><%= form.text_field :notes, class: 'input  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5',  placeholder:"e.g. Failure" %></td>
             <td>
               <div>
-                <%= form.collection_select :exercise_type_id, ExerciseType.order(:name), :id, :name, include_blank: true %>
-                <%= form.text_field :new_exercise_type_name, class: 'input', placeholder:"Or create new type:" %>
+                <%= form.collection_select :exercise_type_id, ExerciseType.order(:name), :id, :name, {include_blank: true}, {class:'input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'}%>
+                <%= form.text_field :new_exercise_type_name, class: 'input  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5', placeholder:"Or create new type:" %>
               </div>
             </td>
             <td>
