@@ -11,8 +11,6 @@
     <table class="table-fixed w-full shadow-lg bg-white border-collapse rounded-lg">
       <thead>
         <tr class="bg-blue-100 border">
-          <th>Name</th>
-          <th>Weight</th>
           <th class="w-12">Sets</th>
           <th class="w-12">Rep</th>
           <th class="w-18">Intens.</th>
@@ -26,8 +24,6 @@
       <!-- Show existing exercises -->
         <% @exercises&.each do |exercise| %>
           <tr class="hover:bg-gray-50 border-b border-blue-gray-200">
-            <td class="px-3 py-3"><%= exercise.name %></td>
-            <td class="text-end px-2 py-3"><%= exercise.weight %></td>
             <td class="text-end px-3 py-3"><%= exercise.sets %></td>
             <td class="text-end px-3 py-3"><%= exercise.repetitions %></td>
             <td class="text-end px-3 py-3"><%= exercise.intensity %></td>
@@ -39,8 +35,6 @@
         <% end %>
         <%= form_with(model: [ @routine, @routine.exercises.build ], local: true) do |form| %>
           <tr class="border-b border-blue-gray-200">
-            <td><%= form.text_field :name, class: 'input w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5' %></td>
-            <td><%= form.number_field :weight, class: 'input w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5' %></td>
             <td><%= form.number_field :sets, class: 'input w-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5'  %></td>
             <td><%= form.number_field :repetitions, class: 'input w-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5' %></td>
             <td><%= form.number_field :intensity, class: 'input w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5' %></td>

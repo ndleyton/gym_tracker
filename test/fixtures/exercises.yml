@@ -2,12 +2,14 @@
 
 one:
   name: MyString
-  weight: 1
+  intensity: 1
+  intensity_measurement: Kgs
   routine: two
   exercise_type: one
 
 two:
   name: MyString
-  weight: 1
+  intensity: 1
+  intensity_measurement: Kgs
   routine: two
   exercise_type: two
