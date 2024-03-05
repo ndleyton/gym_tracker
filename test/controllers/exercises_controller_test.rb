@@ -1,8 +1,9 @@
 require "test_helper"
 
 class ExercisesControllerTest < ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers # If using Devise
+  include Devise::Test::IntegrationHelpers
 
+  # TODO: fix tests
   setup do
     @exercise = exercises(:one)
     @user = users(:one) # Assuming you have a users fixture
